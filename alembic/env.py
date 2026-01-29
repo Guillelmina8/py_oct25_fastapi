@@ -1,16 +1,15 @@
-import os
 from logging.config import fileConfig
 
-from dotenv import load_dotenv
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
 
 from models.user import User # noqa
+from models.task import Task # noqa
+from models.project import Project # noqa
 from db import Base
-
-load_dotenv()
+from core import settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -21,7 +20,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-config.set_main_option("sqlalchemy.url", os.environ["DATABASE_URL"])
+config.set_main_option("sqlalchemy.url", settings.SYNC_DATABASE_URL)
 
 # add your model's MetaData object here
 # for 'autogenerate' support

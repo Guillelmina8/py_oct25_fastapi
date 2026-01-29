@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy import String, func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db import Base
 
@@ -25,6 +25,15 @@ class User(Base):
     )
     created_at: Mapped[datetime] = mapped_column(
         server_default=func.now()
+    )
+
+    projects: Mapped[list["Project"]] = relationship(
+        back_populates="owner",
+        cascade="all, delete-orphan"
+    )
+
+    task: Mapped[list["Task"]] = relationship(
+        secondary="task_assignees", back_populates="assignees"
     )
 
     @property
