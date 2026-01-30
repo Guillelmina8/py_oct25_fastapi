@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     )
 
     DATABASE_URL: str
-    API_PREFIX: str = "/api/v1"
+    API_V1_PREFIX: str = "/api/v1"
     SYNC_DATABASE_URL: str
 
 

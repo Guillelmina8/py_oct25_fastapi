@@ -29,10 +29,13 @@ async def _get_task(
     db: AsyncSession,
     task_id: int,
 ) -> Task:
-    task = await db.scalar(
-        select(Task)
-        .where(Task.id == task_id)
-        .options(selectinload(Task.assignees))
+    task = await db.get(
+        Task,
+        task_id,
+        options=[
+            selectinload(Task.project),
+            selectinload(Task.assignees),
+        ]
     )
 
     if task is None:
